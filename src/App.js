@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useRef } from "react";
 import ClientDetails from "./components/ClientDetails";
 import Dates from "./components/Dates";
 import Footer from "./components/Footer";
@@ -7,9 +7,10 @@ import MainDetails from "./components/MainDetails";
 import Notes from "./components/Notes";
 import Table from "./components/Table";
 import TableFrom from "./components/TableForm";
+import ReactToPrint from "react-to-print";
 
 function App() {
-  const [showInvoice, setShowInvoice] = useState(true);
+  const [showInvoice, setShowInvoice] = useState(false);
   const [name, setName] = useState("Deepanshu Dixit");
   const [address, setAddress] = useState(
     "Ward no 3, chamunda colony keshoraipatan bundi rajasthan"
@@ -21,65 +22,77 @@ function App() {
   const [website, setWebsite] = useState(
     "https://deepanshudportfolio.netlify.app"
   );
-  const [clientName, setClientName] = useState("Ajay Kumar");
-  const [clientAddress, setClientAddress] = useState(
-    "gram patoliya teh keshoraipatan bundi rajasthan"
-  );
-  const [invoiceNumber, setInvoiceNumber] = useState("01");
-  // const [invoiceDate, setInvoiceDate] = useState("06-08-2024");
-  const [dueDate, setDueDate] = useState("12-08-2024");
-  const [notes, setNotes] = useState("Please pay on time ...");
+  const [clientName, setClientName] = useState("");
+  const [clientAddress, setClientAddress] = useState("");
+  const [invoiceNumber, setInvoiceNumber] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [notes, setNotes] = useState("");
   const [description, setDescription] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [quantity, setQuantity] = useState(1);
   const [price, setPrice] = useState("");
   const [amount, setAmount] = useState("");
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
+  const [previewInvoice, setPreviewInvoice] = useState(false);
+
+  const componentRef =useRef()
 
   
 
   return (
     <>
-      <main className="m-5 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl  xl:max-w-4xl  bg-white rounded shadow">
+      <main className="p-5 md:max-w-xl md:mx-auto lg:max-w-2xl  xl:max-w-4xl  bg-white rounded shadow">
+        {previewInvoice ? (
+          <ReactToPrint
+            trigger={() => (
+              <button className="mt-5 mb-5 bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300">
+                Print/Download
+              </button>
+            )}
+            content={() => componentRef.current}
+          />
+        ) : null}
         {showInvoice ? (
-          <div>
-            <Header />
+          <>
+            <div ref={componentRef} className="p-10">
+              <Header />
 
-            <MainDetails name={name} address={address} />
+              <MainDetails name={name} address={address} />
 
-            <ClientDetails
-              clientName={clientName}
-              clientAddress={clientAddress}
-            />
+              <ClientDetails
+                clientName={clientName}
+                clientAddress={clientAddress}
+              />
 
-            <Dates
-              invoiceNumber={invoiceNumber}
-              dueDate={dueDate}
-            />
+              <Dates invoiceNumber={invoiceNumber} dueDate={dueDate} />
 
-            <Table list={list} total={total} setTotal={setTotal} />
+              <Table list={list} total={total} setTotal={setTotal} />
 
-            <Notes notes={notes} />
+              <Notes notes={notes} />
 
-            <Footer
-              name={name}
-              email={email}
-              website={website}
-              phone={phone}
-              bankAccount={bankAccount}
-              bankName={bankName}
-            />
-
+              <Footer
+                name={name}
+                email={email}
+                website={website}
+                phone={phone}
+                bankAccount={bankAccount}
+                bankName={bankName}
+              />
+            </div>
             <button
-              onClick={() => setShowInvoice(false)}
+              onClick={() => {
+                setPreviewInvoice(false);
+                setShowInvoice(false);
+              }}
               className="mt-5 bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
             >
               Edit Invoice
             </button>
-          </div>
+          </>
         ) : (
           <>
             <div className="flex flex-col justify-center ">
+              <Header />
               <article className="md:grid grid-cols-2 gap-10">
                 <div className="flex flex-col ">
                   <label htmlFor="name">Your full name</label>
@@ -211,18 +224,6 @@ function App() {
                   />
                 </div>
 
-                {/* <div className="flex flex-col">
-                  <label htmlFor="invoiceDate">Enter invoice date</label>
-                  <input
-                    type="date"
-                    name="invoiceDate"
-                    id="invoiceDate"
-                    placeholder="Enter invoice date "
-                    value={invoiceDate}
-                    onChange={(e) => setInvoiceDate(e.target.value)}
-                  />
-                </div> */}
-
                 <div className="flex flex-col">
                   <label htmlFor="dueDate">Enter due date</label>
                   <input
@@ -259,14 +260,17 @@ function App() {
                 name="notes"
                 id="notes"
                 cols="30"
-                rows="5"
+                rows="2"
                 placeholder="Additional notes to client"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
               ></textarea>
 
               <button
-                onClick={() => setShowInvoice(true)}
+                onClick={() => {
+                  setPreviewInvoice(true);
+                  setShowInvoice(true);
+                }}
                 className="mt-5 bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
               >
                 Preview Invoice

@@ -23,7 +23,11 @@ const TableForm = ({
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newItems = {
+      if (!description ||  !quantity || !price) {
+          alert("Please fill all inputs")
+      }
+      else {
+          const newItems = {
       id: uuidv4(),
       description,
       quantity,
@@ -31,13 +35,13 @@ const TableForm = ({
       amount,
     };
     setDescription("");
-    setQuantity("");
+    setQuantity(1);
     setPrice("");
     setAmount("");
 
     setList((list) => [...list, newItems]);
     setIsEditing(false);
-    console.log(list);
+      }
   };
 
   // using useEffect to get amount with some dependencies

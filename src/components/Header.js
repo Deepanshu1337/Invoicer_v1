@@ -1,9 +1,9 @@
 import React from 'react'
 
 const Header = () => {
-    const handlePrint = () => {
-      window.print();
-    };
+    // const handlePrint = () => {
+    //   window.print();
+    // };
   return (
     <>
       <header className="flex flex-col items-center justify-center mb-5 xl:flex-row xl:justify-between">
@@ -13,7 +13,7 @@ const Header = () => {
           </h1>
         </div>
 
-        <div>
+        {/* <div>
           <ul className="flex items-center justify-between flex-wrap">
             <li>
               <button
@@ -25,7 +25,7 @@ const Header = () => {
             </li>
             <li className='mx-2'>
               <button className="mt-5 bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300">
-                 Download
+                Download
               </button>
             </li>
             <li>
@@ -34,7 +34,7 @@ const Header = () => {
               </button>
             </li>
           </ul>
-        </div>
+        </div> */}
       </header>
     </>
   );
