@@ -11,17 +11,13 @@ import ReactToPrint from "react-to-print";
 
 function App() {
   const [showInvoice, setShowInvoice] = useState(false);
-  const [name, setName] = useState("Deepanshu Dixit");
-  const [address, setAddress] = useState(
-    "Ward no 3, chamunda colony keshoraipatan bundi rajasthan"
-  );
-  const [email, setEmail] = useState("deepanshudixit07@gmail.com");
-  const [phone, setPhone] = useState("+917597899179");
-  const [bankName, setBankName] = useState("Bank of baroda");
-  const [bankAccount, setBankAccount] = useState("123456789");
-  const [website, setWebsite] = useState(
-    "https://deepanshudportfolio.netlify.app"
-  );
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [bankName, setBankName] = useState("");
+  const [bankAccount, setBankAccount] = useState("");
+  const [website, setWebsite] = useState("");
   const [clientName, setClientName] = useState("");
   const [clientAddress, setClientAddress] = useState("");
   const [invoiceNumber, setInvoiceNumber] = useState("");
