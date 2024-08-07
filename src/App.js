@@ -1,4 +1,4 @@
-import { useState,useRef } from "react";
+import { useState, useRef } from "react";
 import ClientDetails from "./components/ClientDetails";
 import Dates from "./components/Dates";
 import Footer from "./components/Footer";
@@ -33,16 +33,13 @@ function App() {
   const [amount, setAmount] = useState("");
   const [list, setList] = useState([]);
   const [total, setTotal] = useState(0);
-  const [previewInvoice, setPreviewInvoice] = useState(false);
 
-  const componentRef =useRef()
-
-  
+  const componentRef = useRef();
 
   return (
     <>
       <main className="p-5 md:max-w-xl md:mx-auto lg:max-w-2xl  xl:max-w-4xl  bg-white rounded shadow">
-        {previewInvoice ? (
+        {showInvoice ? (
           <ReactToPrint
             trigger={() => (
               <button className="mt-5 mb-5 bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300">
@@ -80,10 +77,7 @@ function App() {
               />
             </div>
             <button
-              onClick={() => {
-                setPreviewInvoice(false);
-                setShowInvoice(false);
-              }}
+              onClick={() => setShowInvoice(false)}
               className="mt-5 bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
             >
               Edit Invoice
@@ -267,10 +261,7 @@ function App() {
               ></textarea>
 
               <button
-                onClick={() => {
-                  setPreviewInvoice(true);
-                  setShowInvoice(true);
-                }}
+                onClick={() => setShowInvoice(false)}
                 className="mt-5 bg-blue-500 text-white font-bold py-2 px-8 rounded shadow border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
               >
                 Preview Invoice
